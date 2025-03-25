@@ -1,4 +1,4 @@
---Invoice tablosunda colomn isimlerini öğrenmek için bu sorguyu çalıştırıyorum
+--Invoice tablosunda column isimlerini öğrenmek için bu sorguyu çalıştırıyorum
 SELECT column_name 
 FROM information_schema.columns 
 WHERE table_name = 'invoice';
@@ -6,34 +6,15 @@ WHERE table_name = 'invoice';
 
 --1. soru Invoice tablosunda, 
 --tüm değerleri NULL olan kayıtların sayısını bulmam isteniyor.
-SELECT COUNT(*) 
-FROM Invoice
-WHERE COALESCE(
-    invoice_id::TEXT, 
-    customer_id::TEXT, 
-    invoice_date::TEXT, 
-    total::TEXT, 
-    billing_city::TEXT, 
-    billing_state::TEXT, 
-    billing_country::TEXT, 
-    billingpostal_code::TEXT, 
-    billing_address::TEXT
-) IS NULL
-
---coalesce kullanmadan sorguyu çalıştıracak olursam:
---row sayısı 1, count değeri 0
-SELECT COUNT(*) 
-FROM Invoice
-WHERE 
-    invoice_id IS NULL AND
-    customer_id IS NULL AND
-    invoice_date IS NULL AND
-    total IS NULL AND
-    billing_city IS NULL AND
-    billing_state IS NULL AND
-    billing_country IS NULL AND
-    billingpostal_code IS NULL AND
-    billing_address IS NULL;
+select * from invoice 
+where invoice_date is null 
+or billing_address is null 
+or billing_city is null 
+or billing_state is null 
+or billing_country is null 
+or billingpostal_code is null 
+or total is null;
+--row sayısı 209
 
 --2. soru:
 --Koordinasyondaki kişiler, Total değerlerinde bir hata olduğunu belirtiyorlar.
